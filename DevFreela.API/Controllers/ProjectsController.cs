@@ -22,7 +22,7 @@ namespace DevFreela.Controllers
         }
 
         //api/projects/id
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         //[Route("api")]
         public IActionResult GetById(int id)
         {
