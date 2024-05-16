@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using DevFreela.Models;
+﻿using DevFreela.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace DevFreela.Controllers
@@ -8,6 +8,7 @@ namespace DevFreela.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly OpeningTimeOption _option;
+
         public ProjectsController(IOptions<OpeningTimeOption> option)
         {
             _option = option.Value;
@@ -23,7 +24,6 @@ namespace DevFreela.Controllers
 
         //api/projects/id
         [HttpGet("{id}")]
-        //[Route("api")]
         public IActionResult GetById(int id)
         {
             //get project by id
@@ -33,7 +33,6 @@ namespace DevFreela.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateProjectModel createProject)
         {
-
             if (createProject.Title.Length > 50)
             {
                 return BadRequest();
@@ -56,7 +55,6 @@ namespace DevFreela.Controllers
             //update obj
 
             return NoContent();
-
         }
 
         // api/projects/3

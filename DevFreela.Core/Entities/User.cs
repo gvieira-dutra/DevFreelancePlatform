@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DevFreela.Core.Entities
+﻿namespace DevFreela.Core.Entities
 {
-    internal class User : BaseEntity
+    public class User : BaseEntity
     {
         public User(string fullName, string email, DateTime birthDate)
         {
@@ -18,7 +12,7 @@ namespace DevFreela.Core.Entities
             CreatedAt = DateTime.Now;
             Skills = new List<UserSkill>();
             OwnedProjects = new List<Project>();
-            FreelaceProjects = new List<Project>(); 
+            FreelaceProjects = new List<Project>();
         }
 
         public string FullName { get; private set; }

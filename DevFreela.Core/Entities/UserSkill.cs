@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DevFreela.Core.Entities
+﻿namespace DevFreela.Core.Entities
 {
-    internal class UserSkill : BaseEntity
+    public class UserSkill : BaseEntity
     {
         public UserSkill(int idUser, int idSkill)
         {

@@ -13,10 +13,9 @@ builder.Services.Configure<OpeningTimeOption>(builder.Configuration.GetSection("
 
 var app = builder.Build();
 
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{    
+{
     app.UseSwagger();
     app.UseSwaggerUI();
 }
