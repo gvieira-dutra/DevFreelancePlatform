@@ -1,7 +1,6 @@
-using DevFreela.Application.Services.Implementation;
-using DevFreela.Application.Services.Interfaces;
 using DevFreela.Infrastructure.Persistence;
-using DevFreela.Models;
+using DevFreela.Application.Commands.CreateProject;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,15 +12,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<OpeningTimeOption>(builder.Configuration.GetSection("OpeningTime"));
-
 var connectionString = builder.Configuration.GetConnectionString("DevFreelaCs");
 
 builder.Services.AddDbContext<DevFreelaDbContext>(p => p.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<IProjectService, ProjectService>();
-
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddMediatR(typeof(CreateProjectCommand));
 
 var app = builder.Build();
 
