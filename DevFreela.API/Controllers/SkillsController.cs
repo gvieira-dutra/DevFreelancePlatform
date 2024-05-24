@@ -1,22 +1,25 @@
-﻿using DevFreela.Application.Services.Interfaces;
+﻿using DevFreela.Application.Queries.GetAllSkills;
+using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreela.API.Controllers
 {
+    [Route("api/skills")]
     public class SkillsController : ControllerBase
     {
-        private readonly ISkillService _skillService;
+        private readonly IMediator _mediator;
 
-        SkillsController(ISkillService skillService)
+        SkillsController(IMediator mediator)
         {
-            _skillService = skillService;
+            _mediator = mediator;
         }
 
-        [HttpGet("api/skills")]
-        public IActionResult GetAllSkills()
+        [HttpGet]
+        public async Task<IActionResult> GetAllSkills()
         {
-            var skills = _skillService.SkillGetAll();
+            var query = new GetAllSkillsQuery();
+            var skills = await _mediator.Send(query);
 
             return Ok(skills);
         }
