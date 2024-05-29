@@ -9,7 +9,7 @@ namespace DevFreela.Application.Commands.UpdateProject
 
         public UpdateProjectCommandHandler(DevFreelaDbContext dbContext)
         {
-            _dbContext = dbContext; 
+            _dbContext = dbContext;
         }
 
         public async Task<Unit> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
@@ -17,8 +17,8 @@ namespace DevFreela.Application.Commands.UpdateProject
             var project = _dbContext.Projects
                             .SingleOrDefault(p => p.Id == request.Id);
 
-           project
-                .Update(request.Title, request.Description, request.TotalCost);
+            project
+                 .Update(request.Title, request.Description, request.TotalCost);
 
             await _dbContext.SaveChangesAsync();
 

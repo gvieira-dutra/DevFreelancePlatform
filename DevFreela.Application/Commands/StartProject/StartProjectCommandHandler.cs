@@ -1,6 +1,6 @@
-﻿using DevFreela.Infrastructure.Persistence;
+﻿using Dapper;
+using DevFreela.Infrastructure.Persistence;
 using MediatR;
-using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,8 +9,8 @@ namespace DevFreela.Application.Commands.StartProject
 {
     public class StartProjectCommandHandler : IRequestHandler<StartProjectCommand, Unit>
     {
-        private readonly DevFreelaDbContext _dbContext;
         private readonly string _connectionString;
+        private readonly DevFreelaDbContext _dbContext;
 
         public StartProjectCommandHandler(DevFreelaDbContext dbContext, IConfiguration configuration)
         {
