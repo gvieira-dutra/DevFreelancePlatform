@@ -1,6 +1,5 @@
 ﻿using DevFreela.Application.Queries.GetAllSkills;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreela.API.Controllers
@@ -10,7 +9,7 @@ namespace DevFreela.API.Controllers
     {
         private readonly IMediator _mediator;
 
-        SkillsController(IMediator mediator)
+        private SkillsController(IMediator mediator)
         {
             _mediator = mediator;
         }
