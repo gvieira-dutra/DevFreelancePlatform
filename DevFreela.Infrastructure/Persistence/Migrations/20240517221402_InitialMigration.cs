@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -8,6 +7,25 @@ namespace DevFreela.Infrastructure.Persistence.Migrations
     /// <inheritdoc />
     public partial class InitialMigration : Migration
     {
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "ProjectComments");
+
+            migrationBuilder.DropTable(
+                name: "Skills");
+
+            migrationBuilder.DropTable(
+                name: "UserSkill");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+        }
+
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -147,25 +165,6 @@ namespace DevFreela.Infrastructure.Persistence.Migrations
                 name: "IX_UserSkill_IdSkill",
                 table: "UserSkill",
                 column: "IdSkill");
-        }
-
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "ProjectComments");
-
-            migrationBuilder.DropTable(
-                name: "Skills");
-
-            migrationBuilder.DropTable(
-                name: "UserSkill");
-
-            migrationBuilder.DropTable(
-                name: "Projects");
-
-            migrationBuilder.DropTable(
-                name: "Users");
         }
     }
 }

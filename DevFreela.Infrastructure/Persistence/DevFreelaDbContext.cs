@@ -8,13 +8,13 @@ namespace DevFreela.Infrastructure.Persistence
     {
         public DevFreelaDbContext(DbContextOptions<DevFreelaDbContext> options) : base(options)
         {
-
         }
 
-        public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectComment> ProjectComments { get; set; }
+        public DbSet<Project> Projects { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

@@ -10,7 +10,7 @@ namespace DevFreela.Application.Queries.GetUser
 
         public GetUserQueryHandler(DevFreelaDbContext dbContext)
         {
-            _dbContext = dbContext; 
+            _dbContext = dbContext;
         }
 
         public async Task<UserViewModel> Handle(GetUserQuery request, CancellationToken cancellationToken)

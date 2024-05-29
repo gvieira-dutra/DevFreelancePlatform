@@ -17,25 +17,24 @@ namespace DevFreela.Core.Entities
             Comments = new List<ProjectComment>();
         }
 
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-        public int IdClient { get; private set; }
         public User Client { get; private set; }
-        public int IdFreelancer { get; private set; }
-        public User Freelancer { get; private set; }
-        public decimal TotalCost { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? StartedAt { get; private set; }
-        public DateTime? FinishAt { get; private set; }
-        public ProjectStatusEnum Status { get; private set; }
         public List<ProjectComment> Comments { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public string Description { get; private set; }
+        public DateTime? FinishAt { get; private set; }
+        public User Freelancer { get; private set; }
+        public int IdClient { get; private set; }
+        public int IdFreelancer { get; private set; }
+        public DateTime? StartedAt { get; private set; }
+        public ProjectStatusEnum Status { get; private set; }
+        public string Title { get; private set; }
+        public decimal TotalCost { get; private set; }
 
-        public void Start()
+        public void Cancel()
         {
-            if (Status == ProjectStatusEnum.Created)
+            if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.InProgress)
             {
-                Status = ProjectStatusEnum.InProgress;
-                StartedAt = DateTime.Now;
+                Status = ProjectStatusEnum.Cancelled;
             }
         }
 
@@ -48,11 +47,12 @@ namespace DevFreela.Core.Entities
             }
         }
 
-        public void Cancel()
+        public void Start()
         {
-            if (Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.InProgress)
+            if (Status == ProjectStatusEnum.Created)
             {
-                Status = ProjectStatusEnum.Cancelled;
+                Status = ProjectStatusEnum.InProgress;
+                StartedAt = DateTime.Now;
             }
         }
 

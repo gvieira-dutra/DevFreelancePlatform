@@ -1,7 +1,9 @@
-﻿using MediatR;
-using Dapper;
-using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+
+using MediatR;
 using Microsoft.Data.SqlClient;
+
+using Microsoft.Extensions.Configuration;
 
 namespace DevFreela.Application.Queries.GetAllSkills
 {

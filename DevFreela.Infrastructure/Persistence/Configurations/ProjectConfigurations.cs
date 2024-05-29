@@ -22,7 +22,6 @@ namespace DevFreela.Infrastructure.Persistence.Configurations
                 .WithMany(p => p.OwnedProjects)
                 .HasForeignKey(p => p.IdClient)
                 .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }
