@@ -56,7 +56,7 @@ namespace DevFreela.Controllers
 
         //api/projects/id
         [HttpGet("{id}")]
-        public async Task<IActionResult>GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var query = new GetProjectByIdQuery(id);
 
