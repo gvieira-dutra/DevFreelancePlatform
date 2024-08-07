@@ -3,7 +3,6 @@ using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Persistence;
 using DevFreela.Infrastructure.Persistence.Repositories;
 using FluentValidation.AspNetCore;
-using Microsoft.Extensions.Configuration;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +16,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddFluentValidationAutoValidation();
 
 // Add services to the container.
 
@@ -88,7 +89,6 @@ builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateUserCommandValidator>();
 
 var app = builder.Build();
