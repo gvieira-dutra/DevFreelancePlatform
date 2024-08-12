@@ -13,8 +13,10 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
+  displayName: 'Building Project'
 
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
+  displayName: 'Running Tests'
