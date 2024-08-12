@@ -1,22 +1,36 @@
 ﻿using DevFreela.Core.DTO;
 using DevFreela.Core.Services;
-using System.Net.Http;
+using Microsoft.Extensions.Configuration;
+using System.Text;
+using System.Text.Json;
 
 namespace DevFreela.Infrastructure.Payments
 {
     public class PaymentService : IPaymentService
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _paymentsBaseUrl;
 
-        public PaymentService(IHttpClientFactory httpClientFactory)
+        public PaymentService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _paymentsBaseUrl = configuration.GetSection("Services:Payments").Value;
         }
-        public Task<bool> ProcessPayment(PaymentInfoDTO paymentInfoDTO)
+        public async Task<bool> ProcessPayment(PaymentInfoDTO paymentInfoDTO)
         {
-            //Logic for payment gateway
+            var url = $"{_paymentsBaseUrl}/api/payments";
+            var paymentInfoJson = JsonSerializer.Serialize(paymentInfoDTO);
 
-            return Task.FromResult(true);
+            var paymentInfoContent = new StringContent(
+                paymentInfoJson,
+                Encoding.UTF8,
+                "application/json");
+
+            var httpClient = _httpClientFactory.CreateClient("Payment");
+
+            var response = await httpClient.PostAsync(url, paymentInfoContent);
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

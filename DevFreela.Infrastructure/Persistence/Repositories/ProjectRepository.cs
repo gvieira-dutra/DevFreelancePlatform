@@ -49,14 +49,18 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
         {
             using (var sqlConnection = new SqlConnection(_connectionString))
             {
-                sqlConnection.Open();
+                await sqlConnection.OpenAsync();
 
-                var script = "UPDATE Projects" +
-                "SET Status = @status, StartedAt = @startedat" +
-                "WHERE Id = @id";
+                var script = "UPDATE Projects " +
+                             "SET Status = @status, StartedAt = @startedat " +
+                             "WHERE Id = @id";
 
-                await sqlConnection.ExecuteAsync(script, new { status = project.Status, startedat = project.StartedAt, project.Id });
+                // Convert the enum to its integer representation
+                var statusValue = (int)project.Status;
+
+                await sqlConnection.ExecuteAsync(script, new { status = statusValue, startedat = project.StartedAt, id = project.Id });
             }
         }
+
     }
 }
