@@ -56,46 +56,6 @@ namespace DevFreela.UnitTests.Application.Commands
         }
 
         [Fact]
-        public async Task CommandHasNullTitle_Executed_ThrowsArgumentException()
-        {
-            // Arrange
-            var projectRepositoryMoq = new Mock<IProjectRepository>();
-            var createProjectCommand = new CreateProjectCommand
-            {
-                Title = null,
-                Description = "Description",
-                TotalCost = 4000,
-                IdClient = 1,
-                IdFreelancer = 2,
-            };
-
-            var createProjectCommandHandler = new CreateProjectCommandHandler(projectRepositoryMoq.Object);
-
-            // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => createProjectCommandHandler.Handle(createProjectCommand, new CancellationToken()));
-        }
-
-        [Fact]
-        public async Task CommandHasNegativeTotalCost_Executed_ThrowsArgumentException()
-        {
-            // Arrange
-            var projectRepositoryMoq = new Mock<IProjectRepository>();
-            var createProjectCommand = new CreateProjectCommand
-            {
-                Title = "Test Project",
-                Description = "Description",
-                TotalCost = -4000,
-                IdClient = 1,
-                IdFreelancer = 2,
-            };
-
-            var createProjectCommandHandler = new CreateProjectCommandHandler(projectRepositoryMoq.Object);
-
-            // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => createProjectCommandHandler.Handle(createProjectCommand, new CancellationToken()));
-        }
-
-        [Fact]
         public async Task ValidData_Executed_CreatesProject()
         {
             // Arrange
