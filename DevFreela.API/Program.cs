@@ -79,8 +79,8 @@ builder.Services.AddSwaggerGen(c =>
               };
           });
 
-        
 
+builder.Services.AddHttpClient();
 
 builder.Services.AddMediatR(typeof(CreateProjectCommand));
 
