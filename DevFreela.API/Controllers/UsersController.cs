@@ -1,7 +1,6 @@
 ﻿using DevFreela.Application.Commands.CreateUser;
 using DevFreela.Application.Commands.LoginUser;
 using DevFreela.Application.Queries.GetUser;
-using DevFreela.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
