@@ -67,6 +67,15 @@ builder.Services.AddSwaggerGen(c =>
           .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
           .AddJwtBearer(options =>
           {
+              var issuer = builder.Configuration["Jwt:Issuer"];
+              var audience = builder.Configuration["Jwt:Audience"];
+              var key = builder.Configuration["Jwt:Key"];
+
+              if (issuer == null || audience == null || key == null)
+              {
+                  throw new InvalidOperationException("JWT configuration values are missing.");
+              }
+
               options.TokenValidationParameters = new TokenValidationParameters
               {
                   ValidateIssuer = true,
@@ -74,11 +83,11 @@ builder.Services.AddSwaggerGen(c =>
                   ValidateLifetime = true,
                   ValidateIssuerSigningKey = true,
 
-                  ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                  ValidAudience = builder.Configuration["Jwt:Audience"],
-                  IssuerSigningKey = new SymmetricSecurityKey
-                (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                  ValidIssuer = issuer,
+                  ValidAudience = audience,
+                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
               };
+
           });
 
 
