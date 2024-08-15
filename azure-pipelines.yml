@@ -13,11 +13,13 @@ steps:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: '8.0.0'
+      version: '8.0.303'
+    displayName: 'Upload SDK DotNet'
 
   - task: DotNetCoreCLI@2
     inputs:
       command: 'build'
+    displayName: 'Building Project'
 
 
   - task: DotNetCoreCLI@2
