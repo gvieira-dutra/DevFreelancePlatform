@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Linq;
 
 namespace DevFreela.API.Filters
@@ -15,20 +16,13 @@ namespace DevFreela.API.Filters
         {
             if (!context.ModelState.IsValid)
             {
-                var messages = new List<string>();
-                var valueErrors = context.ModelState.SelectMany(ms => ms.Value.Errors);
+                var message = context.ModelState
+                    .SelectMany(ms => ms.Value?.Errors ?? [] )
+                    .ToList();
 
-                if (valueErrors != null)
-                {
-
-                    messages = context.ModelState
-                        .SelectMany(ms => ms.Value.Errors)
-                        .Select(e => e.ErrorMessage)    
-                        .ToList();
-                }
-
-                context.Result = new BadRequestObjectResult(messages);
+                context.Result = new BadRequestObjectResult(message);
             }
+
         }
     }
 }
