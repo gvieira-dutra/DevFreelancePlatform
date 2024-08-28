@@ -15,6 +15,8 @@ using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using DevFreela.Infrastructure.Payments;
+using DevFreela.Infrastructure.MessageBus;
+using DevFreela.Application.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,8 +31,8 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DevFreelaCs");
 
-//builder.Services.AddDbContext<DevFreelaDbContext>(p => p.UseSqlServer(connectionString));
-builder.Services.AddDbContext<DevFreelaDbContext>(p => p.UseInMemoryDatabase("InMemoryDb"));
+builder.Services.AddDbContext<DevFreelaDbContext>(p => p.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<DevFreelaDbContext>(p => p.UseInMemoryDatabase("InMemoryDb"));
 
 
 builder.Services.AddSwaggerGen(c =>
@@ -63,32 +65,32 @@ builder.Services.AddSwaggerGen(c =>
                      });
 });
 
-        builder.Services
-          .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-          .AddJwtBearer(options =>
-          {
-              var issuer = builder.Configuration["Jwt:Issuer"];
-              var audience = builder.Configuration["Jwt:Audience"];
-              var key = builder.Configuration["Jwt:Key"];
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var issuer = builder.Configuration["Jwt:Issuer"];
+        var audience = builder.Configuration["Jwt:Audience"];
+        var key = builder.Configuration["Jwt:Key"];
 
-              if (issuer == null || audience == null || key == null)
-              {
-                  throw new InvalidOperationException("JWT configuration values are missing.");
-              }
+        if (issuer == null || audience == null || key == null)
+        {
+            throw new InvalidOperationException("JWT configuration values are missing.");
+        }
 
-              options.TokenValidationParameters = new TokenValidationParameters
-              {
-                  ValidateIssuer = true,
-                  ValidateAudience = true,
-                  ValidateLifetime = true,
-                  ValidateIssuerSigningKey = true,
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
 
-                  ValidIssuer = issuer,
-                  ValidAudience = audience,
-                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
-              };
+            ValidIssuer = issuer,
+            ValidAudience = audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+        };
 
-          });
+    });
 
 
 builder.Services.AddHttpClient();
@@ -100,7 +102,9 @@ builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IMessageBusService, MessageBusService>();
 
+builder.Services.AddHostedService<PaymentApprovedConsumer>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateUserCommandValidator>();
 
