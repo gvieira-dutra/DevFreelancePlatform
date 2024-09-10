@@ -31,8 +31,8 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DevFreelaCs");
 
-builder.Services.AddDbContext<DevFreelaDbContext>(p => p.UseSqlServer(connectionString));
-//builder.Services.AddDbContext<DevFreelaDbContext>(p => p.UseInMemoryDatabase("InMemoryDb"));
+//builder.Services.AddDbContext<DevFreelaDbContext>(p => p.UseSqlServer(connectionString));
+builder.Services.AddDbContext<DevFreelaDbContext>(p => p.UseInMemoryDatabase("InMemoryDb"));
 
 
 builder.Services.AddSwaggerGen(c =>
